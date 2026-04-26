@@ -1,5 +1,6 @@
 # Calcium buffer schematic figure
 Panel A: same Kd, different kon/koff
+
 Panel B: different Kd vs EC50 combinations and their effect on Ca2+ transient
 
 - Author of the code: Kerstin Lenk
