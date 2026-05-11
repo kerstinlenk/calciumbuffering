@@ -94,15 +94,15 @@ Fscan2 = (Ca_scan.^nH) ./ (ind(2).EC50^nH + Ca_scan.^nH);
 
 %% ------------------------------------------------------------
 %% Plot
-figure('Color','w','Position',[100 100 1300 600]);
+figure('Color','w','Position',[100 100 1500 600]);
 
 tiledlayout(1,2,'Padding','compact','TileSpacing','compact');
 
 % A: free Ca transient, same Kd different kinetics
 nexttile;
 plot(t1, y1, 'k--', 'LineWidth', 1.5); hold on;
-plot(t2, y2(:,1), 'r', 'LineWidth', 2);
-plot(t3, y3(:,1), 'b', 'LineWidth', 2);
+plot(t2, y2(:,1), 'r', 'LineWidth', 2.5);
+plot(t3, y3(:,1), 'b', 'LineWidth', 2.5);
 xlabel('Time (s)', 'FontSize', 16);
 ylabel('Free Ca^{2+} (\muM)', 'FontSize', 16);
 title('(A) Same K_d, different k_{on}/k_{off}', 'FontSize', 16);
@@ -112,21 +112,25 @@ box off;
 % B: Kd occupancy vs EC50 fluorescence curves
 nexttile;
 % yyaxis left
-semilogx(Ca_scan, theta1, '-', 'Color', colorsB(1,:), 'LineWidth', 2); hold on;
-semilogx(Ca_scan, theta2, '-', 'Color', colorsB(2,:), 'LineWidth', 2);
+semilogx(Ca_scan, theta1, '-', 'Color', colorsB(1,:), 'LineWidth', 2.5); hold on;
+xline(ind(1).Kd,   ':', 'Color', colorsB(1,:), 'LineWidth', 1.);
+xline(ind(1).EC50, '--', 'Color', colorsB(1,:), 'LineWidth', 1.);
+
+semilogx(Ca_scan, theta2, '-', 'Color', colorsB(2,:), 'LineWidth', 2.5);
 ylabel('Binding occupancy', 'FontSize', 16);
 ylim([0 1]);
-
-xline(ind(1).Kd,   ':', 'Color', colorsB(1,:), 'LineWidth', 1.5);
-xline(ind(1).EC50, '-', 'Color', colorsB(1,:), 'LineWidth', 1.5);
-xline(ind(2).Kd,   ':', 'Color', colorsB(2,:), 'LineWidth', 1.5);
-xline(ind(2).EC50, '-', 'Color', colorsB(2,:), 'LineWidth', 1.5);
+xline(ind(2).Kd,   ':', 'Color', colorsB(2,:), 'LineWidth', 1.);
+xline(ind(2).EC50, '--', 'Color', colorsB(2,:), 'LineWidth', 1.);
+hold off;
 
 xlabel('[Ca^{2+}] (\muM)', 'FontSize', 16);
 title('(B) K_d versus EC_{50}', 'FontSize', 16);
-legend({'Binding occupancy Kd<<EC50','Binding ococcupancy Kd>EC50','Fluorescence readout Kd<<EC50','Fluorescence readout Kd>EC50'}, ...
+legend({'K_d<<EC_{50} case: Binding occ.', ...
+    'K_d<<EC_{50} case: K_d','K_d<<EC_{50} case: EC_{50}', ...
+    'K_d>EC_{50} case: Binding occ.',...
+    'K_d>EC_{50} case: K_d', 'K_d>EC_{50} case: EC_{50}'}, ...
        'Location','southeast', 'FontSize', 12);
 box off; 
 
 %% Optional export
-exportgraphics(gcf, 'buffer_Kd_EC50_schematic.png', 'Resolution', 300);
+exportgraphics(gcf, 'buffer_Kd_EC50_schematic.png', 'Resolution', 600);
